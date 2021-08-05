@@ -8,7 +8,7 @@ typedef struct notas{
 
 char nome [20];
 float nota[10];
-char descricao[][100];
+char **descricao;
 
 }avaliador;
 
@@ -29,11 +29,19 @@ int E;
 
 scanf("%d %d", &N, &M);
 avaliador atleta[N];
+// alocação da descrição dos atletas
+for (int i=0; i<N; i++){
+  atleta[i].descricao = calloc(10,sizeof(char*));
+  for (int k=0; k<10; k++){
+    atleta[i].descricao[k] = calloc(100,sizeof(char));
+  }
+}
 
 // leitura da entrada
 for (int i=0; i< N; i++){
   fgets(atleta[i].nome,20, stdin);
   // tratamento do \n
+  if(atleta[i].nome[strlen(atleta[i].nome)-1]=='\n')
   atleta[i].nome[strlen(atleta[i].nome)-1]= '\0';
   // leitura das notas e das descrições de cada atleta
   for(int k=0; k<M; k++){
